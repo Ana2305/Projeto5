@@ -9,8 +9,11 @@ export default function Settings() {
   const [cnpj, setCnpj] = useState("");
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
+  const [novaSenha, setNovaSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
 
-  // Função para enviar dados para a API
+
+  // -------- SALVAR DADOS DA EMPRESA ----------
   async function salvarAlteracoes() {
     const dados = {
       nomeEmpresa,
@@ -20,7 +23,7 @@ export default function Settings() {
     };
 
     try {
-      const resposta = await fetch("http://127.0.0.1:5000/api/empresa", {
+      const resposta = await fetch("http://127.0.0.1:5000/settings/api/empresa", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,6 +41,44 @@ export default function Settings() {
       alert("Erro ao salvar. Tente novamente.");
     }
   }
+
+
+  // -------- ATUALIZAR SENHA ----------
+  async function atualizarSenha() {
+    if (!novaSenha || !confirmarSenha) {
+      return alert("Preencha todos os campos.");
+    }
+
+    if (novaSenha !== confirmarSenha) {
+      return alert("As senhas não coincidem.");
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const resposta = await fetch("http://127.0.0.1:5000/settings/update_password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ novaSenha }),
+      });
+
+      if (!resposta.ok) {
+        throw new Error("Erro ao atualizar a senha");
+      }
+
+      alert("Senha atualizada com sucesso!");
+      setNovaSenha("");
+      setConfirmarSenha("");
+
+    } catch (erro) {
+      console.error(erro);
+      alert("Erro ao atualizar senha.");
+    }
+  }
+
 
   return (
     <div className="h-screen flex">
@@ -107,19 +148,6 @@ export default function Settings() {
               <Toggle label="Backup automático semanal" />
             </div>
           </Card>
-
-          {/* --- Segurança --- */}
-          <Card title="Segurança">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Input label="Nova Senha" type="password" value="" onChange={() => {}} />
-              <Input label="Confirmar Nova Senha" type="password" value="" onChange={() => {}} />
-            </div>
-
-            <button className="mt-6 px-4 py-2 bg-orange-500 text-white rounded-xl hover:bg-orange-600">
-              Atualizar senha
-            </button>
-          </Card>
-
         </main>
 
         {/* Rodapé */}
@@ -131,6 +159,7 @@ export default function Settings() {
     </div>
   );
 }
+
 
 /* -------------------- COMPONENTES REUTILIZÁVEIS -------------------- */
 
