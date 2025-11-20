@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../services/api";// ✅ instância com baseURL + token
+import api from "../services/api";  // ✅ instância com baseURL + token
 import {
   LineChart,
   Line,

@@ -1,10 +1,10 @@
 // frontend/dashboard/src/services/api.js
 import axios from "axios";
 
-// URL fixa do backend (Render)
+// URL fixa do backend no Render
 const API_URL = "https://ilonnac-backend.onrender.com";
 
-console.log("### API_URL EM RUNTIME (services/api):", API_URL);
+console.log("### API_URL (services/api.js):", API_URL);
 
 const api = axios.create({
   baseURL: API_URL,

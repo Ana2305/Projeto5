@@ -8,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import api from "../../services/api"; // ✅ instância com baseURL + token
+import api from "../services/api";   // ✅ instância com baseURL + token
 
 export default function BarChartComponent() {
   const [data, setData] = useState([]);

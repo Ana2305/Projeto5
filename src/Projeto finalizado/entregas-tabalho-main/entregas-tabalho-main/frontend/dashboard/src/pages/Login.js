@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../../services/api"; // ✅ Importa a instância configurada
+import api from "../services/api";   // ✅ Importa a instância configurada
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Login({ onLogin }) {

@@ -7,7 +7,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import api from "../../services/api"; // ✅ usa a instância com baseURL + token
+import api from "../services/api";  // ✅ usa a instância com baseURL + token
 
 const COLORS = ["#ec4899", "#f97316", "#f59e0b", "#fb7185"];
 
