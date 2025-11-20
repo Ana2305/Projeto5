@@ -20,19 +20,16 @@ def create_app():
     # ---------- Banco ----------
     db.init_app(app)
 
-    # ---------- CORS ----------
-    # Local: http://localhost:3000
-    # Produção: FRONTEND_URL (Vercel) -> setado como env no Render
-    allowed_origins = ["http://localhost:3000"]
-    frontend_url = os.environ.get("FRONTEND_URL")
-    if frontend_url:
-        allowed_origins.append(frontend_url)
-
+        # ---------- CORS ----------
+    # Versão simples: libera geral (para projeto / teste)
     CORS(
         app,
-        resources={r"/*": {"origins": allowed_origins}},
+        resources={r"/*": {"origins": "*"}},
         supports_credentials=True,
+        allow_headers=["Content-Type", "Authorization"],
+        methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     )
+
 
     # ---------- JWT ----------
     jwt = JWTManager(app)
