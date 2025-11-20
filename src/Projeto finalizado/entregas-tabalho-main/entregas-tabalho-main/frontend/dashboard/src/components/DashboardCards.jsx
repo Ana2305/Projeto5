@@ -1,6 +1,6 @@
 // frontend/dashboard/src/components/DashboardCards.jsx
 import { useEffect, useState } from "react";
-import api from "../config/axios";
+import api from "../../services/api";
 
 export default function DashboardCards() {
   const [data, setData] = useState(null);

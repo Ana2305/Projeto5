@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../config/axios"; // ✅ usa a instância configurada
+import api from "../services/api"; // ✅ usa a instância configurada
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Register() {

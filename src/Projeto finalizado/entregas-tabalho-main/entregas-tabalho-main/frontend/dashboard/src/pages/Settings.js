@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import api from "../config/axios"; // ✅ instância com baseURL + token
+import api from "../../services/api"; // ✅ instância com baseURL + token
 
 export default function Settings() {
 

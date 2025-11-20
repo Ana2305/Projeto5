@@ -8,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import api from "../config/axios"; // ✅ usa a instância com baseURL
+import api from "../../services/api"; // ✅ usa a instância com baseURL
 
 export default function AreaChartComponent() {
   const [data, setData] = useState([]);

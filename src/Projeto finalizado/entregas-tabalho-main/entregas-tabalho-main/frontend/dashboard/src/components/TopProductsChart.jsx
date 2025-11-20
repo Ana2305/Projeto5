@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
-import api from "../config/axios"; // ✅ Ajuste o caminho conforme sua estrutura
+import api from "../../services/api"; // ✅ Ajuste o caminho conforme sua estrutura
 
 const COLORS = ["#ec4899", "#f97316", "#f59e0b", "#fb7185", "#fdba74"];
 
