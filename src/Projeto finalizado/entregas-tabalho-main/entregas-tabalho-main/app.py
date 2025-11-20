@@ -24,7 +24,7 @@ def create_app():
     # Versão simples: libera geral (para projeto / teste)
     CORS(
         app,
-        resources={r"/*": {"origins": "*"}},
+        origins="*",
         supports_credentials=True,
         allow_headers=["Content-Type", "Authorization"],
         methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
