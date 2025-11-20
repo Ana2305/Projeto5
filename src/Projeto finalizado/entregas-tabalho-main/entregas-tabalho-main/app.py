@@ -99,7 +99,7 @@ def create_app():
     return app
 
 
-# instancia global pro gunicorn usar: app:app
+
 app = create_app()
 
 if __name__ == "__main__":
