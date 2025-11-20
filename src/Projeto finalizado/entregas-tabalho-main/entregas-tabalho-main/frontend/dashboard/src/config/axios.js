@@ -1,10 +1,11 @@
-// src/axios.js
+// src/config/axios.js
 import axios from "axios";
 
-// URL fixa do backend no Render
+// 👉 NADA de localhost aqui
+// 👉 NADA de process.env aqui
 const API_URL = "https://ilonnac-backend.onrender.com";
 
-console.log("API_URL em runtime:", API_URL);
+console.log("API_URL em runtime (axios.js):", API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
