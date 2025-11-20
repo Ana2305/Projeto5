@@ -81,7 +81,7 @@ export default function Settings() {
 
 
   return (
-    <div className="h-screen flex">
+    <div className="min-h-screen flex bg-gradient-to-b from-pink-50 to-white">
 
       {/* Sidebar */}
       <Sidebar />
