@@ -1,11 +1,10 @@
 // src/services/api.js
 import axios from "axios";
 
-// 🔴 URL fixa do backend – sem localhost, sem env
+// 🔴 URL FIXA – SEM localhost, SEM process.env
 const API_URL = "https://ilonnac-backend.onrender.com";
 
-// esse log é pra gente ter certeza ABSOLUTA de que esse build foi pro ar
-console.log("### BUILD v5 API_URL:", API_URL);
+console.log("### API_URL EM RUNTIME (services/api):", API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
