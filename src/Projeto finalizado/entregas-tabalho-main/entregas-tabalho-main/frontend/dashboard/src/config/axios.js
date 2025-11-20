@@ -1,11 +1,10 @@
+// src/axios.js
 import axios from "axios";
 
-// Em prod: usa REACT_APP_API_URL
-// Em dev: cai no http://127.0.0.1:5000
-const API_URL =
-  process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
+// URL fixa do backend no Render
+const API_URL = "https://ilonnac-backend.onrender.com";
 
-console.log("API_URL em runtime:", API_URL); // <-- pode deixar isso temporário pra ver no console
+console.log("API_URL em runtime:", API_URL);
 
 const api = axios.create({
   baseURL: API_URL,
