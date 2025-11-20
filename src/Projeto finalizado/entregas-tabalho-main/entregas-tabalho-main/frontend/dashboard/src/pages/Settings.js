@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+import api from "../config/axios"; // ✅ instância com baseURL + token
 
 export default function Settings() {
 
@@ -12,7 +13,6 @@ export default function Settings() {
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
 
-
   // -------- SALVAR DADOS DA EMPRESA ----------
   async function salvarAlteracoes() {
     const dados = {
@@ -23,15 +23,9 @@ export default function Settings() {
     };
 
     try {
-      const resposta = await fetch("http://127.0.0.1:5000/settings/api/empresa", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dados),
-      });
+      const resposta = await api.post("/settings/api/empresa", dados);
 
-      if (!resposta.ok) {
+      if (resposta.status < 200 || resposta.status >= 300) {
         throw new Error("Erro ao salvar os dados");
       }
 
@@ -41,7 +35,6 @@ export default function Settings() {
       alert("Erro ao salvar. Tente novamente.");
     }
   }
-
 
   // -------- ATUALIZAR SENHA ----------
   async function atualizarSenha() {
@@ -54,31 +47,22 @@ export default function Settings() {
     }
 
     try {
-      const token = localStorage.getItem("token");
-
-      const resposta = await fetch("http://127.0.0.1:5000/settings/update_password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ novaSenha }),
+      const resposta = await api.post("/settings/update_password", {
+        novaSenha,
       });
 
-      if (!resposta.ok) {
+      if (resposta.status < 200 || resposta.status >= 300) {
         throw new Error("Erro ao atualizar a senha");
       }
 
       alert("Senha atualizada com sucesso!");
       setNovaSenha("");
       setConfirmarSenha("");
-
     } catch (erro) {
       console.error(erro);
       alert("Erro ao atualizar senha.");
     }
   }
-
 
   return (
     <div className="min-h-screen flex bg-gradient-to-b from-pink-50 to-white">
@@ -148,6 +132,34 @@ export default function Settings() {
               <Toggle label="Backup automático semanal" />
             </div>
           </Card>
+
+          {/* --- Alterar senha (se quiser deixar no layout também) --- */}
+          <Card title="Alterar Senha">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input
+                label="Nova Senha"
+                type="password"
+                placeholder="Digite a nova senha"
+                value={novaSenha}
+                onChange={setNovaSenha}
+              />
+              <Input
+                label="Confirmar Nova Senha"
+                type="password"
+                placeholder="Repita a nova senha"
+                value={confirmarSenha}
+                onChange={setConfirmarSenha}
+              />
+            </div>
+
+            <button
+              onClick={atualizarSenha}
+              className="mt-6 px-4 py-2 bg-orange-400 text-white rounded-xl hover:bg-orange-500"
+            >
+              Atualizar senha
+            </button>
+          </Card>
+
         </main>
 
         {/* Rodapé */}
@@ -159,7 +171,6 @@ export default function Settings() {
     </div>
   );
 }
-
 
 /* -------------------- COMPONENTES REUTILIZÁVEIS -------------------- */
 

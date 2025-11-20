@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import api from "../config/axios"; // ✅ usa a instância com baseURL + token
 
 const COLORS = ["#ec4899", "#f97316", "#f59e0b", "#fb7185"];
 
@@ -7,16 +15,14 @@ export default function PieChartComponent() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Substitua a URL pela sua rota do backend
-    fetch("http://localhost:5000/dashboard/clientes-genero")
+    api
+      .get("/dashboard/clientes-genero")
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro ao buscar dados de gênero");
-        }
-        return response.json();
+        setData(response.data);
       })
-      .then((dados) => setData(dados))
-      .catch((error) => console.error("Erro na requisição:", error));
+      .catch((error) => {
+        console.error("Erro ao buscar dados de gênero:", error);
+      });
   }, []);
 
   return (

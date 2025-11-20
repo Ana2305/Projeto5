@@ -8,21 +8,20 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import api from "../config/axios"; // ✅ usa a instância com baseURL
 
 export default function AreaChartComponent() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Substitua pela URL da sua rota backend:
-    fetch("http://localhost:5000/dashboard/vendas-semana")
+    api
+      .get("/dashboard/vendas-semana")
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro ao buscar dados do backend");
-        }
-        return response.json();
+        setData(response.data);
       })
-      .then((dados) => setData(dados))
-      .catch((error) => console.error("Erro na requisição:", error));
+      .catch((error) => {
+        console.error("Erro ao buscar dados do backend:", error);
+      });
   }, []);
 
   return (
@@ -32,7 +31,10 @@ export default function AreaChartComponent() {
       </h3>
 
       <ResponsiveContainer width="100%" height={300}>
-        <AreaChart data={data} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
+        <AreaChart
+          data={data}
+          margin={{ top: 10, right: 20, left: 0, bottom: 5 }}
+        >
           <defs>
             <linearGradient id="colorVendas" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#ec4899" stopOpacity={0.8} />

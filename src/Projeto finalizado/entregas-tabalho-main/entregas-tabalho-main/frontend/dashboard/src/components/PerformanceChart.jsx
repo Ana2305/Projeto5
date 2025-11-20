@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../config/axios"; // ✅ instância com baseURL + token
 import {
   LineChart,
   Line,
@@ -14,16 +14,13 @@ export default function PerformanceChart() {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .get("http://127.0.0.1:5000/dashboard/metrics", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+    api
+      .get("/dashboard/metrics")
       .then((res) => {
         const byDay = res.data.by_day || {};
-        // Converte o objeto { "Segunda": 48.5, "Terça": 50.2 } para um array de objetos
+        // Converte o objeto { "Segunda": 48.5, "Terça": 50.2 } para array
         const formatted = Object.entries(byDay).map(([day, value]) => ({
-          name: day.substring(0, 3), // Ex: "Seg", "Ter"
+          name: day.substring(0, 3), // "Seg", "Ter", etc
           openRate: value,
         }));
         setChartData(formatted);

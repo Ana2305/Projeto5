@@ -1,29 +1,27 @@
 import { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-
-const data = [
-  { name: "Jan", pedidos: 65 },
-  { name: "Fev", pedidos: 57 },
-  { name: "Mar", pedidos: 37 },
-  { name: "Abr", pedidos: 38 },
-  { name: "Mai", pedidos: 33 },
-  { name: "Jun", pedidos: 40 },
-];
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import api from "../config/axios"; // ✅ instância com baseURL + token
 
 export default function BarChartComponent() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Substitua a URL abaixo pela rota real do seu backend
-    fetch("http://localhost:5000/dashboard/pedidos-mensais")
+    api
+      .get("/dashboard/pedidos-mensais")
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro ao buscar dados de pedidos mensais");
-        }
-        return response.json();
+        setData(response.data);
       })
-      .then((dados) => setData(dados))
-      .catch((error) => console.error("Erro na requisição:", error));
+      .catch((error) => {
+        console.error("Erro ao buscar dados de pedidos mensais:", error);
+      });
   }, []);
 
   return (
@@ -33,7 +31,10 @@ export default function BarChartComponent() {
       </h3>
 
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
+        <BarChart
+          data={data}
+          margin={{ top: 10, right: 20, left: 0, bottom: 5 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />

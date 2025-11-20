@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../config/axios"; // ⬅️ usa a instância configurada
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Register() {
@@ -12,16 +12,23 @@ export default function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setMsg("");
+    setError("");
+
     try {
-      const res = await axios.post("http://127.0.0.1:5000/register", {
+      const res = await api.post("/register", {
         username,
         password,
         role,
       });
-      setMsg(res.data.msg);
+
+      setMsg(res.data.msg || "Usuário criado com sucesso!");
       setError("");
+
+      // redireciona após 1.5s
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
+      console.error("Erro ao registrar:", err);
       setMsg("");
       setError(err.response?.data?.msg || "Erro ao registrar");
     }
@@ -41,14 +48,18 @@ export default function Register() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="w-full p-2 border rounded mb-4"
+          required
         />
+
         <input
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full p-2 border rounded mb-4"
+          required
         />
+
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}

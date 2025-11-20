@@ -1,15 +1,13 @@
+// frontend/dashboard/src/components/DashboardCards.jsx
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 
 export default function DashboardCards() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .get("http://127.0.0.1:5000/dashboard/metrics", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+    api
+      .get("/dashboard/metrics")
       .then((res) => setData(res.data))
       .catch((err) => console.error("Erro ao buscar métricas:", err));
   }, []);
@@ -34,7 +32,7 @@ export default function DashboardCards() {
     },
     {
       title: "Melhor Dia (Open Rate)",
-      value: Object.entries(data.by_day).sort((a,b) => b[1]-a[1])[0][0],
+      value: Object.entries(data.by_day).sort((a, b) => b[1] - a[1])[0][0],
       color: "from-orange-500 to-pink-500",
     },
   ];
