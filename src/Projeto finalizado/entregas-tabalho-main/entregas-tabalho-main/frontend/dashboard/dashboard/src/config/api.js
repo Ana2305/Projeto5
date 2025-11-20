@@ -1,7 +1,7 @@
-// src/services/api.js
+// frontend/dashboard/src/services/api.js
 import axios from "axios";
 
-// 🔴 URL FIXA – SEM localhost, SEM process.env
+// URL fixa do backend (Render)
 const API_URL = "https://ilonnac-backend.onrender.com";
 
 console.log("### API_URL EM RUNTIME (services/api):", API_URL);
